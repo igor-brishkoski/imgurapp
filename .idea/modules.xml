@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Imgur/Imgur.iml" filepath="$PROJECT_DIR$/Imgur/Imgur.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ImgurApp_alpha.iml" filepath="$PROJECT_DIR$/ImgurApp_alpha.iml" />
+    </modules>
+  </component>
+</project>
+
