@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 
 public class ImgurApp extends Application{
 
+    private static final String TAG = ImgurApp.class.getSimpleName();
+
     private static SharedPreferences sharedPreferences;
     private static Context context;
 
@@ -23,7 +25,7 @@ public class ImgurApp extends Application{
      *
      * @return apps default SharedPrefrences
      */
-    public static SharedPreferences getSharedPrefrences(){
+    public static SharedPreferences getSharedPreferences(){
         return sharedPreferences;
     }
 

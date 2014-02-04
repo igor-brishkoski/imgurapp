@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="imgur_light_grey">#2b2b2b</color>
+    <color name="imgur_dark_grey">#121211</color>
+    <color name="imgur_divider_light_grey">#444442</color>
+</resources>
