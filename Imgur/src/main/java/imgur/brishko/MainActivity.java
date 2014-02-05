@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 import imgur.brishko.adapters.DrawerMenuAdapter;
 import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.fundamentals.ImgurConstants;
