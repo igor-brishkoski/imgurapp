@@ -149,10 +149,12 @@ public class ImgurAuthorization {
     }
 
     public void logout() {
+        Log.d(TAG,"Logout");
         ImgurApp.getSharedPreferences()
                 .edit()
                 .clear()
                 .commit();
+        ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,true);
     }
 
 }

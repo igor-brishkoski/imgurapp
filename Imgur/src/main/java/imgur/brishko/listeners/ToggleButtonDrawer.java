@@ -10,6 +10,8 @@ import android.view.View;
  */
 public class ToggleButtonDrawer extends ActionBarDrawerToggle {
 
+    private static final String TAG = ToggleButtonDrawer.class.getSimpleName();
+
     Activity activity;
     int openDrawerResource;
     int closedDrawerResource;

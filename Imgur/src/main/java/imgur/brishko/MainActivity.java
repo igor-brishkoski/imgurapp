@@ -1,24 +1,32 @@
 package imgur.brishko;
 
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import imgur.brishko.adapters.DrawerMenuAdapter;
-import imgur.brishko.listeners.ToggleButtonDrawer;
 
-public class MainActivity extends ActionBarActivity {
+import imgur.brishko.adapters.DrawerMenuAdapter;
+import imgur.brishko.fundamentals.ImgurApp;
+import imgur.brishko.fundamentals.ImgurConstants;
+import imgur.brishko.interfaces.IRestartCallback;
+import imgur.brishko.listeners.DrawerItemClickListener;
+import imgur.brishko.listeners.ToggleButtonDrawer;
+import imgur.brishko.login.RefreshAccessTokenTask;
+import imgur.brishko.util.TypeFacedTextView;
+
+public class MainActivity extends ActionBarActivity implements IRestartCallback{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
+    DrawerMenuAdapter mDrawerMenuAdapter;
     ToggleButtonDrawer toggleButtonDrawer;
 
     @Override
@@ -26,16 +34,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //getting the actionbar title id so that we can change the font
         int titleId = getResources().getIdentifier("action_bar_title", "id","android");
         TextView m = (TextView)findViewById(titleId);
-        Typeface typeface = Typeface.createFromAsset(getAssets(),"robotoregular.ttf");
-        m.setTypeface(typeface);
+        TypeFacedTextView.AddRobotoFont(m);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerMenuAdapter = new DrawerMenuAdapter(R.array.drawable_items);
         toggleButtonDrawer = new ToggleButtonDrawer(this, mDrawerLayout, R.drawable.ic_drawer2, R.string.openDrawer, R.string.app_name);
 
-        mDrawerList.setAdapter(new DrawerMenuAdapter(R.array.drawable_items));
+        mDrawerList.setAdapter(mDrawerMenuAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(MainActivity.this));
         mDrawerLayout.setDrawerListener(toggleButtonDrawer);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -96,10 +106,28 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG,"onResume");
+        //setting the menu after logging in
+        //see if there is change in state and notify the adapter
+        if(ImgurApp.getSharedPreferences().getBoolean(ImgurConstants.LOGGIN_IN_OUT,false)){
+            mDrawerMenuAdapter.notifyDataSetChanged();
+            ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,false).commit();
+        }
+        //requesting new access token, doesn't cost api call credits.
+        new RefreshAccessTokenTask().execute();
+    }
+
+    //restarting the activity on logout
+    public void restartActivity(){
+        this.finish();
+        this.startActivity(getIntent());
     }
 }

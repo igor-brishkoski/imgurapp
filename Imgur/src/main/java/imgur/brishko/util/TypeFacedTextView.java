@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import imgur.brishko.fundamentals.ImgurApp;
+import imgur.brishko.fundamentals.ImgurConstants;
 
 public class TypeFacedTextView extends TextView{
 
@@ -26,5 +27,10 @@ public class TypeFacedTextView extends TextView{
         }
     }
 
+
+    public static void AddRobotoFont(TextView textView){
+        Typeface typeface = Typeface.createFromAsset(ImgurApp.getContext().getAssets(), ImgurConstants.ROBOTO_THIN);
+        textView.setTypeface(typeface);
+    }
 
 }

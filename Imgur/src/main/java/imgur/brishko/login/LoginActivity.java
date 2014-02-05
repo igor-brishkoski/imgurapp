@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.fundamentals.ImgurConstants;
 import imgur.brishko.R;
 
@@ -60,7 +61,8 @@ public class LoginActivity extends Activity {
                     long expiresIn = Long.valueOf(m.group(1));
 
                     ImgurAuthorization.getInstance().saveRefreshToken(refreshToken, accessToken, expiresIn);
-
+                    //changing state so that we can make changes
+                    ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,true).commit();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
