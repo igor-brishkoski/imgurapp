@@ -3,6 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ImgurActionBar</item>
     </style>
 
+    <style name="ImgurActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/imgur_light_grey</item>
+    </style>
 </resources>

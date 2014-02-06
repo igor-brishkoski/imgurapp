@@ -1,6 +1,9 @@
 package imgur.brishko;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -17,16 +20,19 @@ import imgur.brishko.interfaces.IRestartCallback;
 import imgur.brishko.listeners.DrawerItemClickListener;
 import imgur.brishko.listeners.ToggleButtonDrawer;
 import imgur.brishko.login.RefreshAccessTokenTask;
+import imgur.brishko.util.ImgurUploadTask;
 import imgur.brishko.util.TypeFacedTextView;
 
 public class MainActivity extends ActionBarActivity implements IRestartCallback{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    final int REQ_CODE_PICK_IMAGE  = 1;
 
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
     DrawerMenuAdapter mDrawerMenuAdapter;
     ToggleButtonDrawer toggleButtonDrawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,8 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
             return true;
         }
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_upload) {
+            pickImage();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -119,14 +126,41 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
         if(ImgurApp.getSharedPreferences().getBoolean(ImgurConstants.LOGGIN_IN_OUT,false)){
             mDrawerMenuAdapter.notifyDataSetChanged();
             ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,false).commit();
+        }else{
+            //requesting new access token, doesn't cost api call credits.
+            new RefreshAccessTokenTask().execute();
         }
-        //requesting new access token, doesn't cost api call credits.
-        new RefreshAccessTokenTask().execute();
+
     }
 
     //restarting the activity on logout
     public void restartActivity(){
         this.finish();
         this.startActivity(getIntent());
+    }
+
+    public void pickImage() {
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, REQ_CODE_PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch(requestCode) {
+            case REQ_CODE_PICK_IMAGE:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    new ImgurUpload(selectedImage,this).execute();
+                }
+        }
+    }
+}
+
+class ImgurUpload extends ImgurUploadTask{
+
+    public ImgurUpload(Uri imageUri, Activity activity) {
+        super(imageUri, activity);
     }
 }
