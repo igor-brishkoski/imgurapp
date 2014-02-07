@@ -4,9 +4,16 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/ImgurActionBar</item>
+        <!-- Refresh Header -->
+        <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
     </style>
 
     <style name="ImgurActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/imgur_light_grey</item>
+    </style>
+
+    <!-- Refresh Header -->
+    <style name="Widget.Custom.PtrHeader" parent="android:Widget">
+        <item name="ptrProgressBarColor">@color/imgur_green</item>
     </style>
 </resources>

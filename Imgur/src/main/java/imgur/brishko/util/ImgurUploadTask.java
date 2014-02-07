@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -13,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import imgur.brishko.login.ImgurAuthorization;
@@ -35,6 +39,7 @@ public abstract class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         byte[] buffer = new byte[8192];
         int count = 0;
         int n = 0;
+
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
@@ -54,7 +59,7 @@ public abstract class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
         HttpURLConnection conn = null;
         InputStream responseIn = null;
-
+        Log.d(TAG,"doInBackground");
         try {
             conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
             conn.setDoOutput(true);
@@ -64,8 +69,10 @@ public abstract class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             //atach the thing we have to he http header
             //example  conn.setRequestProperty("Authorization", "Bearer " + accessToken);
             ImgurAuthorization.getInstance().addToHttpURLConnection(conn);
+            //conn.setRequestProperty("album", "corhM");
 
             OutputStream out = conn.getOutputStream();
+
             copy(imageIn, out);
             out.flush();
             out.close();

@@ -1,6 +1,6 @@
-package imgur.brishko;
+package imgur.brishko.activites;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -13,17 +13,18 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import imgur.brishko.R;
 import imgur.brishko.adapters.DrawerMenuAdapter;
+import imgur.brishko.fragments.MainPageGridFragment;
 import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.fundamentals.ImgurConstants;
 import imgur.brishko.interfaces.IRestartCallback;
 import imgur.brishko.listeners.DrawerItemClickListener;
 import imgur.brishko.listeners.ToggleButtonDrawer;
 import imgur.brishko.login.RefreshAccessTokenTask;
-import imgur.brishko.util.ImgurUploadTask;
 import imgur.brishko.util.TypeFacedTextView;
 
-public class MainActivity extends ActionBarActivity implements IRestartCallback{
+public class MainActivity extends ActionBarActivity implements IRestartCallback,MainPageGridFragment.OnFragmentInteractionListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     final int REQ_CODE_PICK_IMAGE  = 1;
@@ -32,6 +33,8 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
     ListView mDrawerList;
     DrawerMenuAdapter mDrawerMenuAdapter;
     ToggleButtonDrawer toggleButtonDrawer;
+
+    boolean firstTime = true;
 
 
     @Override
@@ -52,6 +55,8 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
         mDrawerList.setAdapter(mDrawerMenuAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(MainActivity.this));
         mDrawerLayout.setDrawerListener(toggleButtonDrawer);
+
+        getFragmentManager().beginTransaction().replace(R.id.container_main, MainPageGridFragment.newInstance("","")).commit();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         //getActionBar().setHomeButtonEnabled(true);
@@ -128,9 +133,10 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
             ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,false).commit();
         }else{
             //requesting new access token, doesn't cost api call credits.
+            if(!firstTime)
             new RefreshAccessTokenTask().execute();
         }
-
+        firstTime = false;
     }
 
     //restarting the activity on logout
@@ -152,15 +158,15 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback{
             case REQ_CODE_PICK_IMAGE:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = imageReturnedIntent.getData();
-                    new ImgurUpload(selectedImage,this).execute();
+                    startActivity(new Intent(this,SelectedImage.class).putExtra("imageUri",selectedImage));
                 }
         }
     }
-}
 
-class ImgurUpload extends ImgurUploadTask{
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-    public ImgurUpload(Uri imageUri, Activity activity) {
-        super(imageUri, activity);
     }
 }
+
+

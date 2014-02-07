@@ -27,6 +27,10 @@ public class TypeFacedTextView extends TextView{
         }
     }
 
+    @Override
+    public boolean isInEditMode() {
+        return true;
+    }
 
     public static void AddRobotoFont(TextView textView){
         Typeface typeface = Typeface.createFromAsset(ImgurApp.getContext().getAssets(), ImgurConstants.ROBOTO_THIN);
