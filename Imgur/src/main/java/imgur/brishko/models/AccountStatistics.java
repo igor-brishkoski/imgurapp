@@ -1,5 +1,4 @@
-package com.example.uploadjpegs.datamodels;
-
+package imgur.brishko.models;
 import java.util.ArrayList;
 
 /**

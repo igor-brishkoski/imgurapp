@@ -1,5 +1,4 @@
-package com.example.uploadjpegs.datamodels;
-
+package imgur.brishko.models;
 /**
  * The data model formatted for gallery images.
  * <p/>

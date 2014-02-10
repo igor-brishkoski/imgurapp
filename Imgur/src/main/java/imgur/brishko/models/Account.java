@@ -1,5 +1,4 @@
-package com.example.uploadjpegs.datamodels;
-
+package imgur.brishko.models;
 /**
  * This model is used to represent the basic account information.
  * <p/>

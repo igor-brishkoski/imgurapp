@@ -1,4 +1,4 @@
-package com.example.uploadjpegs.datamodels;
+package imgur.brishko.models;
 
 /**
  * The base model for a message.
