@@ -164,7 +164,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(Uri uri) {    
 
     }
 }

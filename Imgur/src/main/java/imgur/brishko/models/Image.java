@@ -10,66 +10,21 @@ package imgur.brishko.models;
  * <p/>
  * https://api.imgur.com/models/image
  */
-public class Image {
+public class Image extends BaseImage {
 
-    /**
-     * Small Square	 90x90	No
-     */
-    public static final String SMALL_SQUARE_THUMBNAIL = "s";
-    /**
-     * Big Square	160x160	No
-     */
-    public static final String BIG_SQUARE_THUMBNAIL = "b";
-    /**
-     * Small Thumbnail	160x160	Yes
-     */
-    public static final String SMALL_THUMBNAIL = "t";
-    /**
-     * Medium Thumbnail	320x320	Yes
-     */
-    public static final String MEDIUM_THUMBNAIL = "m";
-    /**
-     * Large Thumbnail	640x640	Yes
-     */
-    public static final String LARGE_THUMBNAIL = "l";
-    /**
-     * Huge Thumbnail	1024x1024	Yes
-     */
-    public static final String HUGE_THUMBNAIL = "h";
-
-    private String id;
-    private String title;
-    private String description;
-    private String datetime;
     private String type;
     private String animated;
     private String width;
     private String height;
     private String size;
-    private String views;
     private String bandwidth;
     private String deletehash;
     private String section;
-    private String link;
+
 
     public Image() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDatetime() {
-        return datetime;
-    }
 
     public String getType() {
         return type;
@@ -91,10 +46,6 @@ public class Image {
         return size;
     }
 
-    public String getViews() {
-        return views;
-    }
-
     public String getBandwidth() {
         return bandwidth;
     }
@@ -107,27 +58,17 @@ public class Image {
         return section;
     }
 
-    public String getLink() {
-        return link;
-    }
-
     @Override
     public String toString() {
         return "Image{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", datetime='" + datetime + '\'' +
-                ", type='" + type + '\'' +
+                "type='" + type + '\'' +
                 ", animated='" + animated + '\'' +
                 ", width='" + width + '\'' +
                 ", height='" + height + '\'' +
                 ", size='" + size + '\'' +
-                ", views='" + views + '\'' +
                 ", bandwidth='" + bandwidth + '\'' +
                 ", deletehash='" + deletehash + '\'' +
                 ", section='" + section + '\'' +
-                ", link='" + link + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

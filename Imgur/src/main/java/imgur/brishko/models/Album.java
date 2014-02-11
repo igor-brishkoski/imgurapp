@@ -8,51 +8,17 @@ import java.util.ArrayList;
  * <p/>
  * https://api.imgur.com/models/album
  */
-public class Album {
+public class Album extends BaseImage {
 
-    private String id;
-    private String title;
-    private String description;
-    private String datetime;
     private String cover;
     private String account_url;
     private String privacy;
     private String layout;
-    private String views;
-    private String link;
     private String deletehash;
     private String images_count;
     private ArrayList<Image> album_images; //TODO create custom Json Builder for the List of images
 
     public Album() {
-    }
-
-    /**
-     * @return The ID for the album
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * @return The title of the album in the gallery
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @return The description of the album in the gallery
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @return Time inserted into the gallery, epoch time
-     */
-    public String getDatetime() {
-        return datetime;
     }
 
     /**
@@ -84,20 +50,6 @@ public class Album {
     }
 
     /**
-     * @return The number of album views
-     */
-    public String getViews() {
-        return views;
-    }
-
-    /**
-     * @return The URL link to the album
-     */
-    public String getLink() {
-        return link;
-    }
-
-    /**
      * @return OPTIONAL, the deletehash, if you're logged in as the album owner
      */
     public String getDeletehash() {
@@ -125,19 +77,13 @@ public class Album {
     @Override
     public String toString() {
         return "Album{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", datetime='" + datetime + '\'' +
-                ", cover='" + cover + '\'' +
+                "cover='" + cover + '\'' +
                 ", account_url='" + account_url + '\'' +
                 ", privacy='" + privacy + '\'' +
                 ", layout='" + layout + '\'' +
-                ", views='" + views + '\'' +
-                ", link='" + link + '\'' +
                 ", deletehash='" + deletehash + '\'' +
                 ", images_count='" + images_count + '\'' +
                 ", album_images=" + album_images +
-                '}';
+                "} " + super.toString();
     }
 }
