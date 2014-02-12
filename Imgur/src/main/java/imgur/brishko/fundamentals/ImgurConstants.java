@@ -14,6 +14,16 @@ public class ImgurConstants {
     public static final String IMGUR_ACCESS_TOKEN_URL = "https://api.imgur.com/oauth2/token";
     public static final String IMGUR_RESPONSE_TYPE = "&response_type=token";
 
+    public static final String IMGUR_SECTION_HOT = "hot";
+    public static final String IMGUR_SECTION_TOP = "top";
+    public static final String IMGUR_SECTION_USER = "user";
+
+    public static final String USER_SELECTED_SECTION = "usr_section";
+    public static final String USER_SELECTED_SORT = "usr_sort";
+
+    public static final String IMGUR_SORT_VIRAL = "viral";
+    public static final String IMGUR_SORT_DATE = "time";
+
     public static final String ROBOTO_THIN = "robotothin.ttf";
 
     public static final String LOGGIN_IN_OUT = "log_in_out";

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import imgur.brishko.R;
 import imgur.brishko.adapters.DrawerMenuAdapter;
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
 
     private static final String TAG = MainActivity.class.getSimpleName();
     final int REQ_CODE_PICK_IMAGE  = 1;
+    final int REQ_CODE_LOGIN = 2;
 
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
@@ -41,6 +43,12 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Initial setup of section and sort for the gallery
+        if(ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"").length()==0){
+            ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_HOT).commit();
+            ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SORT,ImgurConstants.IMGUR_SORT_VIRAL).commit();
+        }
 
         //getting the actionbar title id so that we can change the font
         int titleId = getResources().getIdentifier("action_bar_title", "id","android");
@@ -134,7 +142,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         }else{
             //requesting new access token, doesn't cost api call credits.
             if(!firstTime)
-            new RefreshAccessTokenTask().execute();
+                new RefreshAccessTokenTask().execute();
         }
         firstTime = false;
     }
@@ -160,11 +168,16 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
                     Uri selectedImage = imageReturnedIntent.getData();
                     startActivity(new Intent(this,SelectedImage.class).putExtra("imageUri",selectedImage));
                 }
+                break;
+            case REQ_CODE_LOGIN:
+                if(resultCode == RESULT_OK)
+                    Toast.makeText(this, R.string.logged_in, Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {    
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

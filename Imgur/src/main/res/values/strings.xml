@@ -6,10 +6,10 @@
     <string name="logged_in">Logged in successfully</string>
 
     <string-array name="drawable_items">
+        <item>Browse</item>
+        <item>Galleries</item>
         <item>Images</item>
         <item>Albums</item>
-        <item>Favorites</item>
-        <item>Messages</item>
         <item>Gallery Profile</item>
         <item>Logout</item>
         <item>Sign In</item>
@@ -22,5 +22,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="selected_image">Selected Image</string>
     <string name="uploaded">Uploaded</string>
+    <string name="initial_section"> Top</string>
+    <string name="initial_sort"> Popular</string>
 
 </resources>

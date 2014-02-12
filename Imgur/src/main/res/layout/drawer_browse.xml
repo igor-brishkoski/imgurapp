@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <imgur.brishko.util.TypeFacedTextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:typeface="robotothin.ttf"
+        android:id="@+id/tv_drawr_browse_browse" />
+
+    <imgur.brishko.util.TypeFacedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/imgur_green"
+        app:typeface="robotothin.ttf"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/initial_section"
+        android:id="@+id/tv_drawr_browse_section"
+        android:layout_gravity="center_horizontal" />
+
+    <imgur.brishko.util.TypeFacedTextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/imgur_green"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/initial_sort"
+        app:typeface="robotothin.ttf"
+        android:id="@+id/tv_drawr_browse_sort"
+        android:layout_gravity="right" />
+</LinearLayout>

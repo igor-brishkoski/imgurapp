@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import imgur.brishko.activites.MainActivity;
 import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.interfaces.IRestartCallback;
 import imgur.brishko.login.ImgurAuthorization;
@@ -64,7 +65,8 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
             }
             case 6: {
                 //Login Activity
-                ImgurApp.getContext().startActivity(intent.setClass(mContext, LoginActivity.class));
+
+                ((MainActivity)restartCallback).startActivityForResult(intent.setClass(mContext,LoginActivity.class),2);
                 break;
             }
             default:
