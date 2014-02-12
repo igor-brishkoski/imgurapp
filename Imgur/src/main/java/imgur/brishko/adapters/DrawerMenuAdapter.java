@@ -97,6 +97,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
         TextView mTvSection = (TextView) convertView.findViewById(R.id.tv_drawr_browse_section);
         TextView mTvSort = (TextView) convertView.findViewById(R.id.tv_drawr_browse_sort);
 
+        //setting onclick listeneres
         mTvSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
