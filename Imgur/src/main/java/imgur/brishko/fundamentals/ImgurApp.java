@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 public class ImgurApp extends Application{
 
     private static final String TAG = ImgurApp.class.getSimpleName();
@@ -19,6 +22,11 @@ public class ImgurApp extends Application{
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         context = this;
+
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
+                .memoryCacheSizePercentage(15).build();
+
+        ImageLoader.getInstance().init(configuration);
     }
 
     /**

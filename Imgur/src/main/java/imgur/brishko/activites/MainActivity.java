@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(MainActivity.this));
         mDrawerLayout.setDrawerListener(toggleButtonDrawer);
 
-        getFragmentManager().beginTransaction().replace(R.id.container_main, MainPageGridFragment.newInstance("","")).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container_main, MainPageGridFragment.newInstance()).commit();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         //getActionBar().setHomeButtonEnabled(true);

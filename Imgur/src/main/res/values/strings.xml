@@ -22,7 +22,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="selected_image">Selected Image</string>
     <string name="uploaded">Uploaded</string>
-    <string name="initial_section"> Top</string>
-    <string name="initial_sort"> Popular</string>
+    <string name="initial_section">" Top"</string>
+    <string name="initial_sort">" Popular"</string>
 
 </resources>

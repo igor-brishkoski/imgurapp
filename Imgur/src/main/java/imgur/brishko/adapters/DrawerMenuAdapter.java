@@ -114,7 +114,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
                         ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_TOP).commit();
                         break;
                 }
-                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+"/"+
+                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+
                         ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT,""));
             }
         });
@@ -132,7 +132,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
                         ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SORT,ImgurConstants.IMGUR_SORT_VIRAL).commit();
                         break;
                 }
-                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+"/"+
+                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+
                         ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT,""));
             }
         });

@@ -5,7 +5,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/imgur_light_grey">
 
    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
        android:id="@+id/carddemo_extra_ptr_layout"
@@ -14,11 +15,11 @@
 
        <GridView
            android:id="@+id/gv_frg_main_galleryGrid"
-           android:columnWidth="90dp"
+           android:columnWidth="92dp"
            android:numColumns="auto_fit"
-           android:verticalSpacing="10dp"
-           android:horizontalSpacing="10dp"
-           android:stretchMode="columnWidth"
+           android:verticalSpacing="5dp"
+           android:horizontalSpacing="5dp"
+           android:stretchMode="spacingWidth"
            android:gravity="center"
            android:layout_width="match_parent"
            android:layout_height="match_parent">
