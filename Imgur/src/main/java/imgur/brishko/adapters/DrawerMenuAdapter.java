@@ -59,7 +59,6 @@ public class DrawerMenuAdapter extends BaseAdapter {
                     editText.setText(menutItemsList[position]);
 
                     //Seting the login / logut button in the drawer whether the user is logged in or not
-                    //TODO the logic's gonna have to change
                     if (ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "").length() == 0) {
                         if (menutItemsList[position].equalsIgnoreCase("Logout")) {
                             editText.setVisibility(View.GONE);
@@ -88,8 +87,10 @@ public class DrawerMenuAdapter extends BaseAdapter {
         String sec = ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION, "");
         String sort = ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT, "");
 
-        mTvSection.setText(" "+ sec.substring(0,1).toUpperCase()+sec.substring(1,sec.length()-1));
-        mTvSort.setText(" "+ sort.substring(0,1).toUpperCase()+sort.substring(1,sort.length()-1));
+        if(sec.length()!=0 && sort.length()!=0){
+            mTvSection.setText(" "+ sec.substring(0,1).toUpperCase()+sec.substring(1,sec.length()-1));
+            mTvSort.setText(" "+ sort.substring(0,1).toUpperCase()+sort.substring(1,sort.length()-1));
+        }
 
         //selection setup
         mTvSection.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +133,8 @@ public class DrawerMenuAdapter extends BaseAdapter {
                 putSort(sort);
             }
         });
+
+
     }
 
     //puting the changes in prefrences

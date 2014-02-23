@@ -152,7 +152,9 @@ public class ImgurAuthorization {
         Log.d(TAG, "Logout");
         ImgurApp.getSharedPreferences()
                 .edit()
-                .clear()
+                .remove(ImgurConstants.IMGUR_ACCESS_TOKEN)
+                .remove(ImgurConstants.IMGUR_REFRESH_TOKEN)
+                .remove(ImgurConstants.IMGUR_EXPIRES_IN)
                 .commit();
         ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT, true);
     }

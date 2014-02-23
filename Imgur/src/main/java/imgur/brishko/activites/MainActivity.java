@@ -141,14 +141,12 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         //setting the menu after logging in
         //see if there is change in state and notify the adapter
         if (sharedPreferences.getBoolean(ImgurConstants.LOGGIN_IN_OUT, false)) {
-            mDrawerMenuAdapter.notifyDataSetChanged();
+            Log.d(TAG, "onResume restart");
+            restartActivity();
             sharedPreferences.edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT, false).commit();
-        } else {
-            //requesting new access token, doesn't cost api call credits.
-            if (!firstTime)
-                new RefreshAccessTokenTask().execute();
         }
-        firstTime = false;
+
+        new RefreshAccessTokenTask().execute();
     }
 
     //restarting the activity on logout
