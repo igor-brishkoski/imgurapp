@@ -66,7 +66,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
             case 6: {
                 //Login Activity
 
-                ((MainActivity)restartCallback).startActivityForResult(intent.setClass(mContext,LoginActivity.class),2);
+                ((MainActivity) restartCallback).startActivityForResult(intent.setClass(mContext, LoginActivity.class), 2);
                 break;
             }
             default:

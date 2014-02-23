@@ -1,14 +1,14 @@
 package imgur.brishko.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import imgur.brishko.fundamentals.ImgurApp;
 
@@ -58,7 +58,8 @@ public class BitmapUtils {
         } finally {
             try {
                 in.close();
-            } catch (IOException ignore) {}
+            } catch (IOException ignore) {
+            }
         }
     }
 
@@ -72,9 +73,9 @@ public class BitmapUtils {
 
         if (height > reqHeight || width > reqWidth) {
             if (width > height) {
-                inSampleSize = Math.round((float)height / (float)reqHeight);
+                inSampleSize = Math.round((float) height / (float) reqHeight);
             } else {
-                inSampleSize = Math.round((float)width / (float)reqWidth);
+                inSampleSize = Math.round((float) width / (float) reqWidth);
             }
         }
         return inSampleSize;

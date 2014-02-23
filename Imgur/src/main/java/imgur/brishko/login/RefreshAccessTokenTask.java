@@ -4,9 +4,6 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
-import imgur.brishko.fundamentals.ImgurApp;
-import imgur.brishko.fundamentals.ImgurConstants;
-
 public class RefreshAccessTokenTask extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = RefreshAccessTokenTask.class.getSimpleName();

@@ -46,6 +46,7 @@ public class BaseGalleryImage extends BaseImage {
     public String getAccount_url() {
         return account_url;
     }
+
     /**
      * @return Imgur popularity score
      */

@@ -2,6 +2,7 @@ package imgur.brishko.activites;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,10 +26,10 @@ import imgur.brishko.listeners.ToggleButtonDrawer;
 import imgur.brishko.login.RefreshAccessTokenTask;
 import imgur.brishko.util.TypeFacedTextView;
 
-public class MainActivity extends ActionBarActivity implements IRestartCallback,MainPageGridFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements IRestartCallback, MainPageGridFragment.OnFragmentInteractionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    final int REQ_CODE_PICK_IMAGE  = 1;
+    final int REQ_CODE_PICK_IMAGE = 1;
     final int REQ_CODE_LOGIN = 2;
 
     DrawerLayout mDrawerLayout;
@@ -36,23 +37,25 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     DrawerMenuAdapter mDrawerMenuAdapter;
     ToggleButtonDrawer toggleButtonDrawer;
 
+    SharedPreferences sharedPreferences;
+
     boolean firstTime = true;
+
+    MainPageGridFragment mainPageGridFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = ImgurApp.getSharedPreferences();
 
         //Initial setup of section and sort for the gallery
-        if(ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"").length()==0){
-            ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_HOT).commit();
-            ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SORT,ImgurConstants.IMGUR_SORT_VIRAL).commit();
-        }
+
 
         //getting the actionbar title id so that we can change the font
-        int titleId = getResources().getIdentifier("action_bar_title", "id","android");
-        TextView m = (TextView)findViewById(titleId);
+        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        TextView m = (TextView) findViewById(titleId);
         TypeFacedTextView.AddRobotoFont(m);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,7 +67,9 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(MainActivity.this));
         mDrawerLayout.setDrawerListener(toggleButtonDrawer);
 
-        getFragmentManager().beginTransaction().replace(R.id.container_main, MainPageGridFragment.newInstance("","")).commit();
+        mainPageGridFragment = MainPageGridFragment.newInstance();
+
+        getFragmentManager().beginTransaction().replace(R.id.container_main, mainPageGridFragment).commit();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         //getActionBar().setHomeButtonEnabled(true);
@@ -127,28 +132,27 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         super.onPause();
 
 
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
         //setting the menu after logging in
         //see if there is change in state and notify the adapter
-        if(ImgurApp.getSharedPreferences().getBoolean(ImgurConstants.LOGGIN_IN_OUT,false)){
+        if (sharedPreferences.getBoolean(ImgurConstants.LOGGIN_IN_OUT, false)) {
             mDrawerMenuAdapter.notifyDataSetChanged();
-            ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,false).commit();
-        }else{
+            sharedPreferences.edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT, false).commit();
+        } else {
             //requesting new access token, doesn't cost api call credits.
-            if(!firstTime)
+            if (!firstTime)
                 new RefreshAccessTokenTask().execute();
         }
         firstTime = false;
     }
 
     //restarting the activity on logout
-    public void restartActivity(){
+    public void restartActivity() {
         this.finish();
         this.startActivity(getIntent());
     }
@@ -162,18 +166,27 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        switch(requestCode) {
+        switch (requestCode) {
             case REQ_CODE_PICK_IMAGE:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    startActivity(new Intent(this,SelectedImage.class).putExtra("imageUri",selectedImage));
+                    startActivity(new Intent(this, SelectedImage.class).putExtra("imageUri", selectedImage));
                 }
                 break;
             case REQ_CODE_LOGIN:
-                if(resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK)
                     Toast.makeText(this, R.string.logged_in, Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    //called when the user changed the browsing prefs in the drawer menu
+    public void browsingPrefrencesChanged() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container_main,MainPageGridFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+        sharedPreferences.edit().putBoolean(ImgurConstants.BROWSING_PREFS_CHANGED, false).commit();
     }
 
     @Override

@@ -13,18 +13,24 @@ public class ImgurConstants {
     public static final String IMGUR_AUTHORIZE_URL = "https://api.imgur.com/oauth2/authorize?client_id=";
     public static final String IMGUR_ACCESS_TOKEN_URL = "https://api.imgur.com/oauth2/token";
     public static final String IMGUR_RESPONSE_TYPE = "&response_type=token";
+    public static final String IMGUR_BASE_API_ENDP = "https://api.imgur.com/3/";
+    public static final String IMGUR_URL = "https://www.imgur.com/";
+    public static final String IMGUR_GALLERY_URL = "gallery/";
+    public static final String IMGUR_IMAGE_URL = "image/";
+    public static final String IMGUR_ALBUM_URL = "album/";
 
-    public static final String IMGUR_SECTION_HOT = "hot";
-    public static final String IMGUR_SECTION_TOP = "top";
-    public static final String IMGUR_SECTION_USER = "user";
+    public static final String IMGUR_SECTION_HOT = "hot/";
+    public static final String IMGUR_SECTION_TOP = "top/";
+    public static final String IMGUR_SECTION_USER = "user/";
 
     public static final String USER_SELECTED_SECTION = "usr_section";
     public static final String USER_SELECTED_SORT = "usr_sort";
 
-    public static final String IMGUR_SORT_VIRAL = "viral";
-    public static final String IMGUR_SORT_DATE = "time";
+    public static final String IMGUR_SORT_VIRAL = "viral/";
+    public static final String IMGUR_SORT_DATE = "time/";
 
     public static final String ROBOTO_THIN = "robotothin.ttf";
 
     public static final String LOGGIN_IN_OUT = "log_in_out";
+    public static final String BROWSING_PREFS_CHANGED = "browsing_prefs";
 }
