@@ -5,17 +5,22 @@ import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import imgur.brishko.R;
+import imgur.brishko.fundamentals.ImgurApp;
+import imgur.brishko.fundamentals.ImgurConstants;
 import imgur.brishko.util.BitmapUtils;
 import imgur.brishko.util.ImgurUploadTask;
 
@@ -36,6 +41,9 @@ public class SelectedImageFragment extends Fragment {
     private ImageView selectedImage;
     TextView uploadedImageURL;
     ProgressBar progressBar;
+    EditText imageTitle;
+    EditText imageDescription;
+    Button btnUploadImage;
 
 
     private OnFragmentSelectedImageListener mListener;
@@ -72,19 +80,41 @@ public class SelectedImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_selected_image, null);
+
+        //Views init
         selectedImage = (ImageView) view.findViewById(R.id.iv_selected_image_view);
         uploadedImageURL = (TextView) view.findViewById(R.id.tv_selected_image_uploaded_url);
-        setBitmap(selectedImage);
+        imageDescription = (EditText) view.findViewById(R.id.et_sctdimg_descr);
+        imageTitle = (EditText) view.findViewById(R.id.et_sctdimg_title);
         progressBar = (ProgressBar) view.findViewById(R.id.pb_selected_image);
+        btnUploadImage = (Button) view.findViewById(R.id.btn_sctdimg_upload);
+
+        //roboto font for the views
+        Typeface font = Typeface.createFromAsset(ImgurApp.getContext().getAssets(), ImgurConstants.ROBOTO_THIN);
+        imageTitle.setTypeface(font);
+        imageDescription.setTypeface(font);
+        btnUploadImage.setTypeface(font);
+
+        //listeners init
+        btnUploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ImgurTask(imageUri, getActivity()).execute();
+                progressBar.setVisibility(View.VISIBLE);
+                btnUploadImage.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        setBitmap(selectedImage);
+        progressBar.setVisibility(View.INVISIBLE);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        new ImgurTask(imageUri, getActivity()).execute();
+        //
     }
 
     @Override

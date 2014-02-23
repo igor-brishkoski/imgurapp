@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import imgur.brishko.activites.MainActivity;
 import imgur.brishko.fundamentals.ImgurApp;
@@ -43,7 +44,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                 break;
             }
             case 1: {
-
+                Toast.makeText(mContext,"Gallery",Toast.LENGTH_SHORT).show();
                 break;
             }
             case 2: {

@@ -4,5 +4,6 @@
     <color name="imgur_dark_grey">#121211</color>
     <color name="imgur_divider_light_grey">#444442</color>
     <color name="imgur_green">#85bf25</color>
+    <color name="apptheme_color">#85bf25</color>
     <color name="imgur_red">#FF0000</color>
 </resources>

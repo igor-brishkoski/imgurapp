@@ -19,6 +19,9 @@ public class ImgurConstants {
     public static final String IMGUR_IMAGE_URL = "image/";
     public static final String IMGUR_ALBUM_URL = "album/";
 
+    public static final String IMGUR_G_MEMES = "g/memes/";
+    public static final String IMGUR_R_SUBREDITDS = "r/";
+
     public static final String IMGUR_SECTION_HOT = "hot/";
     public static final String IMGUR_SECTION_TOP = "top/";
     public static final String IMGUR_SECTION_USER = "user/";

@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import imgur.brishko.R;
 import imgur.brishko.fragments.SelectedImageFragment;
 import imgur.brishko.fragments.SelectedImageFragment.OnFragmentSelectedImageListener;
+import imgur.brishko.util.TypeFacedTextView;
 
 public class SelectedImage extends Activity implements OnFragmentSelectedImageListener {
 
@@ -18,6 +20,9 @@ public class SelectedImage extends Activity implements OnFragmentSelectedImageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_image);
 
+        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        TextView m = (TextView) findViewById(titleId);
+        TypeFacedTextView.AddRobotoFont(m);
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()

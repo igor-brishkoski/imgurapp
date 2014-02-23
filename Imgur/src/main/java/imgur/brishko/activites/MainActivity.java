@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerMenuAdapter = new DrawerMenuAdapter(R.array.drawable_items);
-        toggleButtonDrawer = new ToggleButtonDrawer(this, mDrawerLayout, R.drawable.ic_drawer2, R.string.openDrawer, R.string.app_name);
+        toggleButtonDrawer = new ToggleButtonDrawer(this, mDrawerLayout, R.drawable.apptheme_ic_navigation_drawer, R.string.openDrawer, R.string.app_name);
 
         mDrawerList.setAdapter(mDrawerMenuAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(MainActivity.this));

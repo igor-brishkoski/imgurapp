@@ -3,18 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/imgur_light_grey"
     tools:context="imgur.brishko.activites.SelectedImage$PlaceholderFragment">
+
+    <EditText
+        android:hint="@string/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_sctdimg_title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:hint="@string/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_sctdimg_descr"
+        android:layout_below="@id/et_sctdimg_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/selected_image"
         android:id="@+id/iv_selected_image_view"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/et_sctdimg_descr"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
          />
@@ -27,8 +42,10 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:typeface="robotothin.ttf"
+        android:textColor="@color/imgur_green"
         android:background="@color/imgur_light_grey"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="20dp"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -36,4 +53,15 @@
         android:id="@+id/pb_selected_image"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upload"
+        android:id="@+id/btn_sctdimg_upload"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/imgur_dark_grey" />
 </RelativeLayout>
