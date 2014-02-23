@@ -45,6 +45,8 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
     //TESST
     ArrayList<BaseGalleryImage> images;
 
+    String section="";
+    String sort="";
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -65,16 +67,18 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = ImgurApp.getSharedPreferences();
+
         //TEST
         images = new ArrayList<>();
         galleryAdapter = new GalleryAdapter(new ArrayList<BaseGalleryImage>());
 
-        String section = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "");
-        String sort = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SORT, "");
+        section = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "");
+        sort = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SORT, "");
 
         new GetGalleryTask(images, galleryAdapter).execute(ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);
+
         setRetainInstance(true);
-        Log.d(TAG, ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);
+        //Log.d(TAG, ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);
     }
 
     @Override
@@ -94,7 +98,6 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
                 }
             });
         }
-
 
         ActionBarPullToRefresh.from(getActivity()).allChildrenArePullable()
                 .listener(this)

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.koushikdutta.ion.Ion;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -21,25 +22,14 @@ import imgur.brishko.models.BaseImage;
 import imgur.brishko.models.GalleryAlbum;
 import imgur.brishko.models.GalleryImage;
 
-/**
- * Created by bri6ko on 2/12/14.
- */
 public class GalleryAdapter extends BaseAdapter {
 
     private static final String TAG = GalleryAdapter.class.getSimpleName();
     List<BaseGalleryImage> baseGalleryImages;
-    DisplayImageOptions imageOptions;
 
 
     public GalleryAdapter(List<BaseGalleryImage> baseGalleryImages) {
         this.baseGalleryImages = baseGalleryImages;
-        imageOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisc(true)
-                .showImageForEmptyUri(R.drawable.ic_launcher)
-                .showImageOnLoading(R.drawable.ic_launcher)
-                .showImageOnFail(R.drawable.ic_launcher)
-                .build();
     }
 
     @Override
@@ -59,53 +49,38 @@ public class GalleryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView thumbnail = null;
-        ImageView background = null;
+        BaseGalleryImage baseGalleryImage = baseGalleryImages.get(position);
+        View mainView = convertView;
         //check if the view is created
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) ImgurApp.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            //if not apply correct image/album layout
-            if (baseGalleryImages.get(position) instanceof GalleryImage) {
-                convertView = layoutInflater.inflate(R.layout.gallery_image_item, null);
-            } else {
-                convertView = layoutInflater.inflate(R.layout.gallery_album_item, null);
-            }
+            mainView = layoutInflater.inflate(R.layout.gallery_image_item,null);
         }
 
-        //set the thumbnail, ID for image, cover for Album
-        //can;t set on clcik here, has to be on the gridview
-        if (baseGalleryImages.get(position) instanceof GalleryImage) {
-            setImageLayout(thumbnail, convertView, (GalleryImage) baseGalleryImages.get(position));
-            background = (ImageView) convertView.findViewById(R.id.iv_gallery_image_item_back);
-            if (background != null) {
-                setBackgroundVoteColor(background, baseGalleryImages.get(position));
-                //Log.d(TAG, "NOOT NULL");
-            }
-        } else {
-            setAlbumLayout(thumbnail, convertView, (GalleryAlbum) baseGalleryImages.get(position));
-            background = (ImageView) convertView.findViewById(R.id.iv_gallery_album_item_back);
-            if (background != null) {
-                setBackgroundVoteColor(background, baseGalleryImages.get(position));
-                //Log.d(TAG, "NOOT NULL");
-            }
+        ImageView pic = (ImageView) mainView.findViewById(R.id.iv_gallery_image_item_thumb);
+        ImageView backg = (ImageView) mainView.findViewById(R.id.iv_gallery_image_item_back);
+        String url = "";
+
+        if(baseGalleryImage instanceof GalleryImage){
+            url = ImgurConstants.IMGUR_URL + baseGalleryImage.getId() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg";
+        }else
+        {
+            url = ImgurConstants.IMGUR_URL + ((GalleryAlbum)baseGalleryImage).getCover() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg";
         }
 
-        //
+        //setting the picture in the main gallery
+        Ion.with(pic)
+                .placeholder(R.drawable.ic_launcher)
+                .error(R.drawable.ic_launcher)
+                .load(url);
 
+        //setting the color of the backgroun
+        setBackgroundVoteColor(backg,baseGalleryImage);
 
-        return convertView;
+        return mainView;
     }
 
-    private void setImageLayout(ImageView thumbnail, View convertView, GalleryImage image) {
-        thumbnail = (ImageView) convertView.findViewById(R.id.iv_gallery_image_item_thumb);
-        ImageLoader.getInstance().displayImage(ImgurConstants.IMGUR_URL + image.getId() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg", thumbnail);
-    }
-
-    private void setAlbumLayout(ImageView thumbnail, View convertView, GalleryAlbum album) {
-        thumbnail = (ImageView) convertView.findViewById(R.id.iv_gallery_album_item_thumb);
-        ImageLoader.getInstance().displayImage(ImgurConstants.IMGUR_URL + album.getCover() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg", thumbnail);
-    }
-
+    //if the image is upvoted by the user is green, if downvoted is red and if neutral is dark grey
     private void setBackgroundVoteColor(ImageView imageView, BaseGalleryImage image) {
         if (image.getVote() != null) {
             switch (image.getVote()) {
