@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class ImgurApp extends Application {
 
@@ -29,11 +27,6 @@ public class ImgurApp extends Application {
                     .putString(ImgurConstants.USER_SELECTED_SORT, ImgurConstants.IMGUR_SORT_VIRAL)
                     .commit();
         }
-
-        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
-                .memoryCacheSizePercentage(15).build();
-
-        ImageLoader.getInstance().init(configuration);
     }
 
     /**

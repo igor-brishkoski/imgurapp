@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.koushikdutta.ion.Ion;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,6 @@ public class GalleryAdapter extends BaseAdapter {
 
     private static final String TAG = GalleryAdapter.class.getSimpleName();
     List<BaseGalleryImage> baseGalleryImages;
-
 
     public GalleryAdapter(List<BaseGalleryImage> baseGalleryImages) {
         this.baseGalleryImages = baseGalleryImages;
