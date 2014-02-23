@@ -1,7 +1,6 @@
 package imgur.brishko.adapters;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +34,8 @@ public class GalleryAdapter extends BaseAdapter {
     public GalleryAdapter(List<BaseGalleryImage> baseGalleryImages) {
         this.baseGalleryImages = baseGalleryImages;
         imageOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(false)
-                .cacheOnDisc(false)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
                 .showImageForEmptyUri(R.drawable.ic_launcher)
                 .showImageOnLoading(R.drawable.ic_launcher)
                 .showImageOnFail(R.drawable.ic_launcher)
@@ -81,14 +79,14 @@ public class GalleryAdapter extends BaseAdapter {
             background = (ImageView) convertView.findViewById(R.id.iv_gallery_image_item_back);
             if (background != null) {
                 setBackgroundVoteColor(background, baseGalleryImages.get(position));
-                Log.d(TAG, "NOOT NULL");
+                //Log.d(TAG, "NOOT NULL");
             }
         } else {
             setAlbumLayout(thumbnail, convertView, (GalleryAlbum) baseGalleryImages.get(position));
             background = (ImageView) convertView.findViewById(R.id.iv_gallery_album_item_back);
             if (background != null) {
                 setBackgroundVoteColor(background, baseGalleryImages.get(position));
-                Log.d(TAG, "NOOT NULL");
+                //Log.d(TAG, "NOOT NULL");
             }
         }
 
@@ -100,13 +98,11 @@ public class GalleryAdapter extends BaseAdapter {
 
     private void setImageLayout(ImageView thumbnail, View convertView, GalleryImage image) {
         thumbnail = (ImageView) convertView.findViewById(R.id.iv_gallery_image_item_thumb);
-        //Picasso.with(ImgurApp.getContext()).load(ImgurConstants.IMGUR_URL + image.getId() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg").into(thumbnail);
         ImageLoader.getInstance().displayImage(ImgurConstants.IMGUR_URL + image.getId() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg", thumbnail);
     }
 
     private void setAlbumLayout(ImageView thumbnail, View convertView, GalleryAlbum album) {
         thumbnail = (ImageView) convertView.findViewById(R.id.iv_gallery_album_item_thumb);
-        //Picasso.with(ImgurApp.getContext()).load(ImgurConstants.IMGUR_URL + album.getCover() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg").into(thumbnail);
         ImageLoader.getInstance().displayImage(ImgurConstants.IMGUR_URL + album.getCover() + BaseImage.SMALL_SQUARE_THUMBNAIL + ".jpg", thumbnail);
     }
 

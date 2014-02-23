@@ -1,4 +1,5 @@
 package imgur.brishko.models;
+
 import java.util.ArrayList;
 
 /**
@@ -25,6 +26,7 @@ public class GalleryAlbum extends BaseGalleryImage {
     public String getCover() {
         return cover;
     }
+
     /**
      * @return The privacy level of the album, you can only view public if not logged in as album owner
      */

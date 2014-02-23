@@ -20,7 +20,6 @@
         android:textColor="@color/imgur_green"
         app:typeface="robotothin.ttf"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/initial_section"
         android:id="@+id/tv_drawr_browse_section"
         android:layout_gravity="center_horizontal" />
 
@@ -29,7 +28,6 @@
         android:textColor="@color/imgur_green"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/initial_sort"
         app:typeface="robotothin.ttf"
         android:id="@+id/tv_drawr_browse_sort"
         android:layout_gravity="right" />

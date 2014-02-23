@@ -1,7 +1,7 @@
 package imgur.brishko.adapters;
 
 import android.app.Activity;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +58,8 @@ public class DrawerMenuAdapter extends BaseAdapter {
                     editText = (TypeFacedTextView) convertView.findViewById(R.id.drawer_custom_menu_item);
                     editText.setText(menutItemsList[position]);
 
+                    //Seting the login / logut button in the drawer whether the user is logged in or not
+                    //TODO the logic's gonna have to change
                     if (ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "").length() == 0) {
                         if (menutItemsList[position].equalsIgnoreCase("Logout")) {
                             editText.setVisibility(View.GONE);
@@ -74,67 +76,77 @@ public class DrawerMenuAdapter extends BaseAdapter {
 
             }
         }
-        /*
-        //show/hide sign in/logout in the drawer menu whether the user is signed in or not
-        if (ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "").length() == 0) {
-            if (menutItemsList[position].equalsIgnoreCase("Logout")) {
-                editText.setVisibility(View.GONE);
-            } else {
-                editText.setVisibility(View.VISIBLE);
-            }
-        } else {
-            if (menutItemsList[position].equalsIgnoreCase("Sign In")) {
-                editText.setVisibility(View.GONE);
-            } else {
-                editText.setVisibility(View.VISIBLE);
-            }
-        }
-        */
+
         return convertView;
     }
 
+    //setting up the browse prefrences in the drawer menu
     private void browseLayout(View convertView) {
         TextView mTvSection = (TextView) convertView.findViewById(R.id.tv_drawr_browse_section);
         TextView mTvSort = (TextView) convertView.findViewById(R.id.tv_drawr_browse_sort);
 
+        String sec = ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION, "");
+        String sort = ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT, "");
+
+        mTvSection.setText(" "+ sec.substring(0,1).toUpperCase()+sec.substring(1,sec.length()-1));
+        mTvSort.setText(" "+ sort.substring(0,1).toUpperCase()+sort.substring(1,sort.length()-1));
+
+        //selection setup
         mTvSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(((TextView)v).getText().toString()){
+                String selection = "";
+                switch (((TextView) v).getText().toString()) {
                     case " Top":
-                        ((TextView)v).setText(" Viral");
-                        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_HOT).commit();
+                        ((TextView) v).setText(" Hot");
+                        selection = ImgurConstants.IMGUR_SECTION_HOT;
                         break;
-                    case " Viral":
-                        ((TextView)v).setText(" User");
-                        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_USER).commit();
+                    case " Hot":
+                        ((TextView) v).setText(" User");
+                        selection = ImgurConstants.IMGUR_SECTION_USER;
                         break;
                     case " User":
-                        ((TextView)v).setText(" Top");
-                        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SECTION,ImgurConstants.IMGUR_SECTION_TOP).commit();
+                        ((TextView) v).setText(" Top");
+                        selection = ImgurConstants.IMGUR_SECTION_TOP;
                         break;
                 }
-                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+
-                        ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT,""));
+                putSelection(selection);
+
             }
         });
-
+        //sort setup
         mTvSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (((TextView)v).getText().toString()){
-                    case " Popular":
-                        ((TextView)v).setText(" New");
-                        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SORT,ImgurConstants.IMGUR_SORT_DATE).commit();
+                String sort = "";
+                switch (((TextView) v).getText().toString()) {
+                    case " Viral":
+                        ((TextView) v).setText(" Time");
+                        sort = ImgurConstants.IMGUR_SORT_DATE;
                         break;
-                    case " New":
-                        ((TextView)v).setText(" Popular");
-                        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.USER_SELECTED_SORT,ImgurConstants.IMGUR_SORT_VIRAL).commit();
+                    case " Time":
+                        ((TextView) v).setText(" Viral");
+                        sort = ImgurConstants.IMGUR_SORT_VIRAL;
                         break;
                 }
-                Log.d(TAG,"https://api.imgur.com/3/gallery/"+ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SECTION,"")+
-                        ImgurApp.getSharedPreferences().getString(ImgurConstants.USER_SELECTED_SORT,""));
+                putSort(sort);
             }
         });
+    }
+
+    //puting the changes in prefrences
+    private void putSelection(String selection) {
+        ImgurApp.getSharedPreferences().edit()
+                .putString(ImgurConstants.USER_SELECTED_SECTION, selection)
+                .putBoolean(ImgurConstants.BROWSING_PREFS_CHANGED, true)
+                .commit();
+    }
+
+    //puting the changes in prefrences
+    private void putSort(String sort) {
+        ImgurApp.getSharedPreferences().edit()
+                .putString(ImgurConstants.USER_SELECTED_SORT, sort)
+                .putBoolean(ImgurConstants.BROWSING_PREFS_CHANGED, true)
+                .commit();
     }
 }

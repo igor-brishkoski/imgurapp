@@ -1,4 +1,5 @@
 package imgur.brishko.models;
+
 import java.util.ArrayList;
 
 /**

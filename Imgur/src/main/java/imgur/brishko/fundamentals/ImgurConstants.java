@@ -32,4 +32,5 @@ public class ImgurConstants {
     public static final String ROBOTO_THIN = "robotothin.ttf";
 
     public static final String LOGGIN_IN_OUT = "log_in_out";
+    public static final String BROWSING_PREFS_CHANGED = "browsing_prefs";
 }

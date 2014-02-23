@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.fundamentals.ImgurConstants;
-import imgur.brishko.R;
 
 
 public class LoginActivity extends Activity {
@@ -22,7 +20,6 @@ public class LoginActivity extends Activity {
     private static final Pattern accessTokenPattern = Pattern.compile("access_token=([^&]*)");
     private static final Pattern refreshTokenPattern = Pattern.compile("refresh_token=([^&]*)");
     private static final Pattern expiresInPattern = Pattern.compile("expires_in=(\\d+)");
-
 
 
     @Override
@@ -64,7 +61,7 @@ public class LoginActivity extends Activity {
 
                     ImgurAuthorization.getInstance().saveRefreshToken(refreshToken, accessToken, expiresIn);
                     //changing state so that we can make changes
-                    ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT,true).commit();
+                    ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT, true).commit();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

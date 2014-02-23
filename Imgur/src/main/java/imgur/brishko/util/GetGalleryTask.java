@@ -2,11 +2,9 @@ package imgur.brishko.util;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.BaseAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -27,7 +25,7 @@ import imgur.brishko.models.GalleryAlbum;
 import imgur.brishko.models.GalleryImage;
 
 /**
- * Created by bri6ko on 2/12/14.
+ *
  */
 public class GetGalleryTask extends AsyncTask<String, Void, Void> {
     private final String TAG = GetGalleryTask.class.getSimpleName();
@@ -65,8 +63,8 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        for(BaseGalleryImage image : galleryImages)
-        Log.d(TAG,image.toString());
+        //for(BaseGalleryImage image : galleryImages)
+        //Log.d(TAG,image.toString());
 
         adapter.refersh(galleryImages);
     }
@@ -94,10 +92,10 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
             JsonArray jsonArray = jsonObject.getAsJsonArray("data");
 
             //JsonArray is array of JsonElements
-            for (int i=0;i<jsonArray.size();i++) {
+            for (int i = 0; i < jsonArray.size(); i++) {
                 //parse it to JsonObject so that we can check if it's album or image
                 JsonObject curObject = jsonArray.get(i).getAsJsonObject();
-                Log.d("OBJECT",curObject.toString());
+                //Log.d("OBJECT",curObject.toString());
                 //If it's an album
                 if (curObject.get("is_album").toString().contains("true")) {
                     galleryImages.add(gson.fromJson(jsonArray.get(i), GalleryAlbum.class));

@@ -1,4 +1,5 @@
 package imgur.brishko.models;
+
 /**
  * The base model for an image.
  * <p/>

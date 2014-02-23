@@ -15,7 +15,7 @@
 
        <GridView
            android:id="@+id/gv_frg_main_galleryGrid"
-           android:columnWidth="92dp"
+           android:columnWidth="91dp"
            android:numColumns="auto_fit"
            android:verticalSpacing="5dp"
            android:horizontalSpacing="5dp"

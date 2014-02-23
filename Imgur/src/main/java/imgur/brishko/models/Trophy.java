@@ -1,4 +1,5 @@
 package imgur.brishko.models;
+
 /**
  * Example URL: https://api.imgur.com/3/account/{username}/gallery_profile
  * <p/>

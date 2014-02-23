@@ -26,7 +26,6 @@ import imgur.brishko.util.ImgurUploadTask;
  * to handle interaction events.
  * Use the {@link SelectedImageFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class SelectedImageFragment extends Fragment {
     //TODO Add Parametars to POST request
@@ -46,7 +45,6 @@ public class SelectedImageFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param imageUri Uri to the selected Image.
-     *
      * @return A new instance of fragment SelectedImageFragment.
      */
 
@@ -58,6 +56,7 @@ public class SelectedImageFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public SelectedImageFragment() {
         // Required empty public constructor
     }
@@ -74,7 +73,7 @@ public class SelectedImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_selected_image,null);
+        View view = inflater.inflate(R.layout.fragment_selected_image, null);
         selectedImage = (ImageView) view.findViewById(R.id.iv_selected_image_view);
         uploadedImageURL = (TextView) view.findViewById(R.id.tv_selected_image_uploaded_url);
         setBitmap(selectedImage);
@@ -85,7 +84,7 @@ public class SelectedImageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new ImgurTask(imageUri,getActivity()).execute();
+        new ImgurTask(imageUri, getActivity()).execute();
     }
 
     @Override
@@ -110,7 +109,7 @@ public class SelectedImageFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
@@ -120,12 +119,13 @@ public class SelectedImageFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public void setBitmap(ImageView selectedImage){
+    public void setBitmap(ImageView selectedImage) {
         selectedImage.setImageBitmap(BitmapUtils.decodeSampledBitmapFromUri(imageUri, 400, 400));
     }
 
-    class ImgurTask extends ImgurUploadTask{
+    class ImgurTask extends ImgurUploadTask {
         Activity activity;
+
         public ImgurTask(Uri imageUri, Activity activity) {
             super(imageUri, activity);
             this.activity = activity;
@@ -138,11 +138,11 @@ public class SelectedImageFragment extends Fragment {
             activity.getActionBar().setTitle(activity.getString(R.string.uploaded));
             //Copy the url directly do clipboard
             ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("uploadedImageURL","http://www.imgur.com/" + s);
+            ClipData clip = ClipData.newPlainText("uploadedImageURL", "http://www.imgur.com/" + s);
             clipboardManager.setPrimaryClip(clip);
 
             uploadedImageURL.setText("http://www.imgur.com/" + s);
-            Toast.makeText(activity.getBaseContext(),"Copied to clipboard "+"http://www.imgur.com/" + s,Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getBaseContext(), "Copied to clipboard " + "http://www.imgur.com/" + s, Toast.LENGTH_SHORT).show();
         }
     }
 
