@@ -59,16 +59,21 @@ public class DrawerMenuAdapter extends BaseAdapter {
                     editText.setText(menutItemsList[position]);
 
                     //Seting the login / logut button in the drawer whether the user is logged in or not
+                    //if the user is not logged in and the item is logout, images,albums or gallery profile
+                    //hide those view and show the rest of them
                     if (ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "").length() == 0) {
-                        if (menutItemsList[position].equalsIgnoreCase("Logout")) {
+                        if (menutItemsList[position].equalsIgnoreCase("Logout")|| menutItemsList[position].equalsIgnoreCase("Images")
+                                || menutItemsList[position].equalsIgnoreCase("Albums") || menutItemsList[position].equalsIgnoreCase("Gallery Profile")) {
                             editText.setVisibility(View.GONE);
                         } else {
                             editText.setVisibility(View.VISIBLE);
                         }
+                    //if the user is logged in, show all views except for Sign In view
                     } else {
-                        if (menutItemsList[position].equalsIgnoreCase("Sign In")) {
+                        if(menutItemsList[position].equalsIgnoreCase("Sign In")) {
                             editText.setVisibility(View.GONE);
-                        } else {
+                        }
+                        else{
                             editText.setVisibility(View.VISIBLE);
                         }
                     }
@@ -92,7 +97,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
             mTvSort.setText(" "+ sort.substring(0,1).toUpperCase()+sort.substring(1,sort.length()-1));
         }
 
-        //selection setup
+        //selection setup listener
         mTvSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +120,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
 
             }
         });
-        //sort setup
+        //sort setup listener
         mTvSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

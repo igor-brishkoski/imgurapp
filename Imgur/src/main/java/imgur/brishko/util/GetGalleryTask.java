@@ -63,8 +63,8 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //for(BaseGalleryImage image : galleryImages)
-        //Log.d(TAG,image.toString());
+        for(BaseGalleryImage image : galleryImages)
+            Log.d(TAG,image.toString());
 
         adapter.refersh(galleryImages);
     }

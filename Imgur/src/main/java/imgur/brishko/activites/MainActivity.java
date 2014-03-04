@@ -30,7 +30,6 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
 
     private static final String TAG = MainActivity.class.getSimpleName();
     final int REQ_CODE_PICK_IMAGE = 1;
-    final int REQ_CODE_LOGIN = 2;
 
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
@@ -38,8 +37,6 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     ToggleButtonDrawer toggleButtonDrawer;
 
     SharedPreferences sharedPreferences;
-
-    boolean firstTime = true;
 
     MainPageGridFragment mainPageGridFragment;
 
@@ -109,7 +106,6 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
         //drawer is open or not
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         return super.onPrepareOptionsMenu(menu);
-
     }
 
     @Override
@@ -130,8 +126,6 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
 
     @Override
@@ -144,9 +138,9 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
             Log.d(TAG, "onResume restart");
             restartActivity();
             sharedPreferences.edit().putBoolean(ImgurConstants.LOGGIN_IN_OUT, false).commit();
+        } else {
+            new RefreshAccessTokenTask().execute();
         }
-
-        new RefreshAccessTokenTask().execute();
     }
 
     //restarting the activity on logout
@@ -171,17 +165,13 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
                     startActivity(new Intent(this, SelectedImage.class).putExtra("imageUri", selectedImage));
                 }
                 break;
-            case REQ_CODE_LOGIN:
-                if (resultCode == RESULT_OK)
-                    Toast.makeText(this, R.string.logged_in, Toast.LENGTH_SHORT).show();
-                break;
         }
     }
 
     //called when the user changed the browsing prefs in the drawer menu
     public void browsingPrefrencesChanged() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container_main,MainPageGridFragment.newInstance())
+                .replace(R.id.container_main, MainPageGridFragment.newInstance())
                 .addToBackStack(null)
                 .commit();
         sharedPreferences.edit().putBoolean(ImgurConstants.BROWSING_PREFS_CHANGED, false).commit();
