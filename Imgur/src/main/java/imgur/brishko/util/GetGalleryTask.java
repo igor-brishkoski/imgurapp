@@ -73,6 +73,7 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        ImgurApp.getSharedPreferences().edit().putBoolean(ImgurConstants.LOADING,true).commit();
         for(BaseGalleryImage image : galleryImages)
             Log.d(TAG,image.toString());
 

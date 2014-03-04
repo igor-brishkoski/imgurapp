@@ -1,6 +1,7 @@
 package imgur.brishko.listeners;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.AbsListView;
 
@@ -14,16 +15,17 @@ public class GalleryScrollListener implements AbsListView.OnScrollListener {
     private final String TAG = GalleryScrollListener.class.getSimpleName();
 
     Fragment fragment;
-    boolean laoding = true;
+    SharedPreferences sharedPreferences;
 
 
     public GalleryScrollListener(Fragment fragment) {
         this.fragment = fragment;
+        sharedPreferences = ImgurApp.getSharedPreferences();
+        sharedPreferences.edit().putBoolean(ImgurConstants.LOADING,true).commit();
     }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-
     }
 
     @Override
@@ -31,17 +33,18 @@ public class GalleryScrollListener implements AbsListView.OnScrollListener {
 
         Log.d(TAG, "firstVisibleItem = "+firstVisibleItem+"; totalItemCount = "+totalItemCount+"; visibleitems = "+visibleItemCount);
 
-        if((firstVisibleItem+visibleItemCount)>totalItemCount-5 && totalItemCount!=0 && laoding){
-            int page = Integer.parseInt(ImgurApp.getSharedPreferences().getString(ImgurConstants.CURRENT_PAGE,"0"));
-            page += 1;
+        if((firstVisibleItem+visibleItemCount)>totalItemCount-5 && totalItemCount!=0 && sharedPreferences.getBoolean(ImgurConstants.LOADING,false)){
 
-            ImgurApp.getSharedPreferences().edit()
+            int page = Integer.parseInt(sharedPreferences.getString(ImgurConstants.CURRENT_PAGE,"0"));
+            page += 1;
+            sharedPreferences.edit()
+                    .putBoolean(ImgurConstants.LOADING,false)
                     .putString(ImgurConstants.CURRENT_PAGE, Integer.toString(page))
                     .commit();
 
             Log.d(TAG,"ASYNCTASK FIRE");
             ((MainPageGridFragment)fragment).getGallery();
-            laoding = false;
+
         }
     }
 }
