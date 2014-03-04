@@ -21,6 +21,10 @@ public class ImgurApp extends Application {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         context = this;
 
+        //set the page to 0 every time the user activates the app
+        sharedPreferences.edit().putString(ImgurConstants.CURRENT_PAGE,"0").commit();
+
+        //first time app activated, set the section and sorting to default
         if (sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "").length() == 0) {
             sharedPreferences.edit()
                     .putString(ImgurConstants.USER_SELECTED_SECTION, ImgurConstants.IMGUR_SECTION_HOT)

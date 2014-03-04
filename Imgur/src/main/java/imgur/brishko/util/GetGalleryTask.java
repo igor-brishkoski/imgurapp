@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import imgur.brishko.adapters.GalleryAdapter;
 import imgur.brishko.fundamentals.ImgurApp;
@@ -24,17 +26,15 @@ import imgur.brishko.models.BaseGalleryImage;
 import imgur.brishko.models.GalleryAlbum;
 import imgur.brishko.models.GalleryImage;
 
-/**
- *
- */
+
 public class GetGalleryTask extends AsyncTask<String, Void, Void> {
     private final String TAG = GetGalleryTask.class.getSimpleName();
 
     ArrayList<BaseGalleryImage> galleryImages;
     GalleryAdapter adapter;
 
-    public GetGalleryTask(ArrayList<BaseGalleryImage> galleryImages, GalleryAdapter adapter) {
-        this.galleryImages = galleryImages;
+    public GetGalleryTask(GalleryAdapter adapter) {
+        this.galleryImages = new ArrayList<>();
         this.adapter = adapter;
     }
 
@@ -57,6 +57,16 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         }
 
+        //send to ScrollListener
+        /*//find the page with regular expression
+        Pattern pattern = Pattern.compile("\\d$");
+        Matcher matcher = pattern.matcher(imgur_url_endpoint[0]);
+        matcher.find();
+        //parse it to integer and increase it by one
+        int page = Integer.parseInt(matcher.group());
+        page = page + 1;
+        //set it in shared preferences
+        ImgurApp.getSharedPreferences().edit().putString(ImgurConstants.CURRENT_PAGE,Integer.toString(page)).commit();*/
         return null;
     }
 
@@ -69,18 +79,9 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
         adapter.refersh(galleryImages);
     }
 
-    private void setImgurHeader(HttpGet get) {
-        String accestoken = ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "");
-
-        if (accestoken.length() != 0) {
-            get.setHeader("Authorization", "Bearer " + accestoken);
-        } else {
-            get.setHeader("Authorization", "Client-ID " + ImgurConstants.IMGUR_CLIENT_ID);
-        }
-
-    }
-
     private void parseJsonResponse(String jsonString) {
+        //has to bew new arraylist, otherwise it adds the old images to the new request
+        //galleryImages = new ArrayList<>();
         JsonParser jsonParser = new JsonParser();
         Gson gson = new Gson();
         //parsing the result to JsonObject
@@ -104,5 +105,16 @@ public class GetGalleryTask extends AsyncTask<String, Void, Void> {
                 }
             }
         }
+    }
+
+    private void setImgurHeader(HttpGet get) {
+        String accestoken = ImgurApp.getSharedPreferences().getString(ImgurConstants.IMGUR_ACCESS_TOKEN, "");
+
+        if (accestoken.length() != 0) {
+            get.setHeader("Authorization", "Bearer " + accestoken);
+        } else {
+            get.setHeader("Authorization", "Client-ID " + ImgurConstants.IMGUR_CLIENT_ID);
+        }
+
     }
 }

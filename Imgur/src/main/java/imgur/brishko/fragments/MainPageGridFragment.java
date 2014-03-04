@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import imgur.brishko.R;
 import imgur.brishko.adapters.GalleryAdapter;
 import imgur.brishko.fundamentals.ImgurApp;
 import imgur.brishko.fundamentals.ImgurConstants;
+import imgur.brishko.listeners.GalleryScrollListener;
 import imgur.brishko.models.BaseGalleryImage;
 import imgur.brishko.util.GetGalleryTask;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -47,6 +49,8 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
 
     String section="";
     String sort="";
+    String page="";
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -72,10 +76,7 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
         images = new ArrayList<>();
         galleryAdapter = new GalleryAdapter(new ArrayList<BaseGalleryImage>());
 
-        section = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "");
-        sort = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SORT, "");
-
-        new GetGalleryTask(images, galleryAdapter).execute(ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);
+        getGallery();
 
         setRetainInstance(true);
         //Log.d(TAG, ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);
@@ -98,6 +99,7 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
                 }
             });
         }
+        gridView.setOnScrollListener(new GalleryScrollListener(this));
 
         ActionBarPullToRefresh.from(getActivity()).allChildrenArePullable()
                 .listener(this)
@@ -133,15 +135,19 @@ public class MainPageGridFragment extends Fragment implements OnRefreshListener 
     @Override
     public void onRefreshStarted(View view) {
         Toast.makeText(getActivity(), "Refresher", Toast.LENGTH_SHORT).show();
-        //pullToRefreshLayout.setRefreshComplete();
+        getGallery();
 
-        /*String section = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "");
+        pullToRefreshLayout.setRefreshComplete();
+    }
+
+    public void getGallery(){
+        String section = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SECTION, "");
         String sort = sharedPreferences.getString(ImgurConstants.USER_SELECTED_SORT, "");
-        sharedPreferences.edit().putBoolean(ImgurConstants.BROWSING_PREFS_CHANGED, false).commit();
+        String page = sharedPreferences.getString(ImgurConstants.CURRENT_PAGE, "");
 
-        new GetGalleryTask(images, galleryAdapter).execute(ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort);*/
+        Log.d(TAG,ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort + page);
 
-
+        new GetGalleryTask(galleryAdapter).execute(ImgurConstants.IMGUR_BASE_API_ENDP + ImgurConstants.IMGUR_GALLERY_URL + section + sort + page);
     }
 
     /**

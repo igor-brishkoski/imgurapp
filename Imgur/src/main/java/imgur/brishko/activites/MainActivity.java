@@ -35,9 +35,7 @@ public class MainActivity extends ActionBarActivity implements IRestartCallback,
     ListView mDrawerList;
     DrawerMenuAdapter mDrawerMenuAdapter;
     ToggleButtonDrawer toggleButtonDrawer;
-
     SharedPreferences sharedPreferences;
-
     MainPageGridFragment mainPageGridFragment;
 
 

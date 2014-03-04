@@ -36,4 +36,5 @@ public class ImgurConstants {
 
     public static final String LOGGIN_IN_OUT = "log_in_out";
     public static final String BROWSING_PREFS_CHANGED = "browsing_prefs";
+    public static final String CURRENT_PAGE = "current_page";
 }

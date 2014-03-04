@@ -21,7 +21,6 @@ public class DrawerMenuAdapter extends BaseAdapter {
     String[] menutItemsList;
 
     public DrawerMenuAdapter(int itemsResource) {
-
         menutItemsList = ImgurApp.getContext().getResources().getStringArray(itemsResource);
     }
 
@@ -47,6 +46,8 @@ public class DrawerMenuAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) ImgurApp.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
             switch (position) {
+                //Browsing preferences view item
+                //customized in browseLayout method
                 case 0:
                     convertView = inflater.inflate(R.layout.drawer_browse, null);
                     TextView mTvBrowse = (TextView) convertView.findViewById(R.id.tv_drawr_browse_browse);
